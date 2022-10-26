@@ -21,14 +21,16 @@ RUN autoreconf --install && \
 FROM debian:latest
 LABEL maintainer "RootShell-coder <Root.Shelling@gmail.com>"
 
-RUN apt update && apt install -y openssl liblog4cplus-2.0.5 valgrind
-COPY --from=builder /opt/kea /opt/kea
-
 EXPOSE 67/udp
-EXPOSE 8080/tcp
+EXPOSE 8000/tcp
 
 WORKDIR /opt/kea
 
+COPY --from=builder /opt/kea/ /opt/kea/
 COPY start-dhcp-server.sh /usr/local/bin
-RUN chmod +x /usr/local/bin/start-dhcp-server.sh
+
+RUN apt update && apt install -y openssl liblog4cplus-2.0.5 valgrind libmariadb3 postgresql-client && \
+    rm -rf /var/lib/apt/lists/* && \
+    chmod +x /usr/local/bin/start-dhcp-server.sh
+
 CMD ["start-dhcp-server.sh"]
