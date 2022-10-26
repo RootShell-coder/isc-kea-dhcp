@@ -1,0 +1,24 @@
+name: Docker isc-kea-dhcp dev
+
+on:
+  push:
+    branches: [ "dev" ]
+  pull_request:
+    branches: [ "dev" ]
+
+env:
+  VERSION: 2.2.0
+  IMAGE_NAME: isc-kea-dhcp
+  HUB_USER: rootshellcoder
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile -t $HUB_USER/$IMAGE_NAME:$VERSION.dev.$(date +%Y%m%d)
+    - name: Login to Docker Hub
+      run: echo "${{ secrets.HUB_TOKEN }}" | docker login -u $HUB_USER --password-stdin
+    - name: Push Image to Docker Hub
+      run: docker push $HUB_USER/$IMAGE_NAME:$VERSION.dev.$(date +%Y%m%d)
