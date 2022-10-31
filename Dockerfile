@@ -11,18 +11,14 @@ RUN apt update && apt upgrade -y && apt install -y \
 
 WORKDIR /tmp/kea-${KEA_DHCP_VERSION}
 
-RUN autoreconf --install && \
+RUN autoreconf --verbose --force --install && \
    ./configure \
-        --disable-static \
-        --disable-dependency-tracking \
-        --disable-silent-rules \
         --enable-generate-messages \
         --with-mysql \
         --prefix=/opt/kea \
         --with-log4cplus \
         --with-openssl \
-        --with-boost-include \
-        --disable-rpath && \
+        --with-boost-include && \
     make -s -j$(nproc) && \
     make install && \
     rm -rf /opt/kea/include \
