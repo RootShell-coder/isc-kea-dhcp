@@ -14,6 +14,8 @@ WORKDIR /tmp/kea-${KEA_DHCP_VERSION}
 RUN autoreconf --install && \
    ./configure \
         --disable-static \
+        --disable-dependency-tracking \
+        --disable-silent-rules \
         --enable-generate-messages \
         --with-mysql \
         --prefix=/opt/kea \
