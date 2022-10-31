@@ -40,7 +40,6 @@ COPY start-dhcp-server.sh /usr/local/bin
 
 RUN apt update && apt install -y openssl liblog4cplus-2.0.5 valgrind libmariadb3 postgresql-client flex bison && \
     rm -rf /var/lib/apt/lists/* && \
-    chmod +x /usr/local/bin/start-dhcp-server.sh \
-    ldconfig
+    chmod +x /usr/local/bin/start-dhcp-server.sh
 
 CMD ["start-dhcp-server.sh"]
