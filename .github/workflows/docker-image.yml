@@ -2,9 +2,9 @@ name: Docker isc-kea-dhcp dev
 
 on:
   push:
-    branches: [ "dev" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "dev" ]
+    branches: [ "master" ]
 
 env:
   VERSION: 2.2.0
